@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RecipeAPIModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="RecipeAPIModelStoreContainer">
+          <EntitySet Name="ErrorLog" EntityType="RecipeAPIModel.Store.ErrorLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ingredient" EntityType="RecipeAPIModel.Store.Ingredient" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="IngredientList" EntityType="RecipeAPIModel.Store.IngredientList" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Instruction" EntityType="RecipeAPIModel.Store.Instruction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="InstructionList" EntityType="RecipeAPIModel.Store.InstructionList" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Measurement" EntityType="RecipeAPIModel.Store.Measurement" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Member" EntityType="RecipeAPIModel.Store.Member" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Recipe" EntityType="RecipeAPIModel.Store.Recipe" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Version" EntityType="RecipeAPIModel.Store.Version" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_IngredientList_Ingredient" Association="RecipeAPIModel.Store.FK_IngredientList_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="IngredientList" EntitySet="IngredientList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientList_Measurement" Association="RecipeAPIModel.Store.FK_IngredientList_Measurement">
+            <End Role="Measurement" EntitySet="Measurement" />
+            <End Role="IngredientList" EntitySet="IngredientList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientList_Recipe" Association="RecipeAPIModel.Store.FK_IngredientList_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="IngredientList" EntitySet="IngredientList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstructionList_Recipe" Association="RecipeAPIModel.Store.FK_InstructionList_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="InstructionList" EntitySet="InstructionList" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorLogId" />
+          </Key>
+          <Property Name="ErrorLogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="APIVersionId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+          <Property Name="Message" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="IngredientId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="IngredientList">
+          <Key>
+            <PropertyRef Name="IngredientListId" />
+          </Key>
+          <Property Name="IngredientListId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RecipeId" Type="int" Nullable="false" />
+          <Property Name="IngredientId" Type="int" Nullable="false" />
+          <Property Name="MeasurementId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Instruction">
+          <Key>
+            <PropertyRef Name="InstructionId" />
+          </Key>
+          <Property Name="InstructionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InstructionList">
+          <Key>
+            <PropertyRef Name="InstructionListId" />
+          </Key>
+          <Property Name="InstructionListId" Type="int" Nullable="false" />
+          <Property Name="RecipeId" Type="int" Nullable="false" />
+          <Property Name="Instruction" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Measurement">
+          <Key>
+            <PropertyRef Name="MeasurementId" />
+          </Key>
+          <Property Name="MeasurementId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ApiKey" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="RecipeId" />
+          </Key>
+          <Property Name="RecipeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Notes" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="VersionId" />
+          </Key>
+          <Property Name="VersionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ApiVersion" Type="int" Nullable="false" />
+          <Property Name="Version" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_IngredientList_Ingredient">
+          <End Role="Ingredient" Type="RecipeAPIModel.Store.Ingredient" Multiplicity="1" />
+          <End Role="IngredientList" Type="RecipeAPIModel.Store.IngredientList" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IngredientId" />
+            </Principal>
+            <Dependent Role="IngredientList">
+              <PropertyRef Name="IngredientListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientList_Measurement">
+          <End Role="Measurement" Type="RecipeAPIModel.Store.Measurement" Multiplicity="1" />
+          <End Role="IngredientList" Type="RecipeAPIModel.Store.IngredientList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Measurement">
+              <PropertyRef Name="MeasurementId" />
+            </Principal>
+            <Dependent Role="IngredientList">
+              <PropertyRef Name="MeasurementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientList_Recipe">
+          <End Role="Recipe" Type="RecipeAPIModel.Store.Recipe" Multiplicity="1" />
+          <End Role="IngredientList" Type="RecipeAPIModel.Store.IngredientList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="IngredientList">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstructionList_Recipe">
+          <End Role="Recipe" Type="RecipeAPIModel.Store.Recipe" Multiplicity="1" />
+          <End Role="InstructionList" Type="RecipeAPIModel.Store.InstructionList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="InstructionList">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RecipeAPIModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RecipeAPIEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Versions" EntityType="RecipeAPIModel.Version" />
+          <EntitySet Name="ErrorLogs" EntityType="RecipeAPIModel.ErrorLog" />
+          <EntitySet Name="Ingredients" EntityType="RecipeAPIModel.Ingredient" />
+          <EntitySet Name="IngredientLists" EntityType="RecipeAPIModel.IngredientList" />
+          <EntitySet Name="Instructions" EntityType="RecipeAPIModel.Instruction" />
+          <EntitySet Name="InstructionLists" EntityType="RecipeAPIModel.InstructionList" />
+          <EntitySet Name="Measurements" EntityType="RecipeAPIModel.Measurement" />
+          <EntitySet Name="Recipes" EntityType="RecipeAPIModel.Recipe" />
+          <AssociationSet Name="FK_IngredientList_Ingredient" Association="RecipeAPIModel.FK_IngredientList_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="IngredientList" EntitySet="IngredientLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientList_Measurement" Association="RecipeAPIModel.FK_IngredientList_Measurement">
+            <End Role="Measurement" EntitySet="Measurements" />
+            <End Role="IngredientList" EntitySet="IngredientLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientList_Recipe" Association="RecipeAPIModel.FK_IngredientList_Recipe">
+            <End Role="Recipe" EntitySet="Recipes" />
+            <End Role="IngredientList" EntitySet="IngredientLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstructionList_Recipe" Association="RecipeAPIModel.FK_InstructionList_Recipe">
+            <End Role="Recipe" EntitySet="Recipes" />
+            <End Role="InstructionList" EntitySet="InstructionLists" />
+          </AssociationSet>
+          <EntitySet Name="Members" EntityType="RecipeAPIModel.Member" />
+        </EntityContainer>
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="VersionId" />
+          </Key>
+          <Property Name="VersionId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ApiVersion" Type="Int32" Nullable="false" />
+          <Property Name="Version1" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorLogId" />
+          </Key>
+          <Property Type="Int32" Name="ErrorLogId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="APIVersionId" Nullable="false" />
+          <Property Type="String" Name="Name" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Message" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Type="Int32" Name="IngredientId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="IngredientList" Relationship="RecipeAPIModel.FK_IngredientList_Ingredient" FromRole="Ingredient" ToRole="IngredientList" />
+        </EntityType>
+        <EntityType Name="IngredientList">
+          <Key>
+            <PropertyRef Name="IngredientListId" />
+          </Key>
+          <Property Type="Int32" Name="IngredientListId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="RecipeId" Nullable="false" />
+          <Property Type="Int32" Name="IngredientId" Nullable="false" />
+          <Property Type="Int32" Name="MeasurementId" Nullable="false" />
+          <NavigationProperty Name="Ingredient" Relationship="RecipeAPIModel.FK_IngredientList_Ingredient" FromRole="IngredientList" ToRole="Ingredient" />
+          <NavigationProperty Name="Measurement" Relationship="RecipeAPIModel.FK_IngredientList_Measurement" FromRole="IngredientList" ToRole="Measurement" />
+          <NavigationProperty Name="Recipe" Relationship="RecipeAPIModel.FK_IngredientList_Recipe" FromRole="IngredientList" ToRole="Recipe" />
+        </EntityType>
+        <EntityType Name="Instruction">
+          <Key>
+            <PropertyRef Name="InstructionId" />
+          </Key>
+          <Property Type="Int32" Name="InstructionId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="InstructionList">
+          <Key>
+            <PropertyRef Name="InstructionListId" />
+          </Key>
+          <Property Type="Int32" Name="InstructionListId" Nullable="false" />
+          <Property Type="Int32" Name="RecipeId" Nullable="false" />
+          <Property Type="String" Name="Instruction" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recipe" Relationship="RecipeAPIModel.FK_InstructionList_Recipe" FromRole="InstructionList" ToRole="Recipe" />
+        </EntityType>
+        <EntityType Name="Measurement">
+          <Key>
+            <PropertyRef Name="MeasurementId" />
+          </Key>
+          <Property Type="Int32" Name="MeasurementId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="IngredientLists" Relationship="RecipeAPIModel.FK_IngredientList_Measurement" FromRole="Measurement" ToRole="IngredientList" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="RecipeId" />
+          </Key>
+          <Property Type="Int32" Name="RecipeId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="IngredientLists" Relationship="RecipeAPIModel.FK_IngredientList_Recipe" FromRole="Recipe" ToRole="IngredientList" />
+          <NavigationProperty Name="InstructionLists" Relationship="RecipeAPIModel.FK_InstructionList_Recipe" FromRole="Recipe" ToRole="InstructionList" />
+        </EntityType>
+        <Association Name="FK_IngredientList_Ingredient">
+          <End Type="RecipeAPIModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="RecipeAPIModel.IngredientList" Role="IngredientList" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IngredientId" />
+            </Principal>
+            <Dependent Role="IngredientList">
+              <PropertyRef Name="IngredientListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientList_Measurement">
+          <End Type="RecipeAPIModel.Measurement" Role="Measurement" Multiplicity="1" />
+          <End Type="RecipeAPIModel.IngredientList" Role="IngredientList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Measurement">
+              <PropertyRef Name="MeasurementId" />
+            </Principal>
+            <Dependent Role="IngredientList">
+              <PropertyRef Name="MeasurementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientList_Recipe">
+          <End Type="RecipeAPIModel.Recipe" Role="Recipe" Multiplicity="1" />
+          <End Type="RecipeAPIModel.IngredientList" Role="IngredientList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="IngredientList">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstructionList_Recipe">
+          <End Type="RecipeAPIModel.Recipe" Role="Recipe" Multiplicity="1" />
+          <End Type="RecipeAPIModel.InstructionList" Role="InstructionList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="InstructionList">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Type="Int32" Name="MemberId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ApiKey" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RecipeAPIModelStoreContainer" CdmEntityContainer="RecipeAPIEntities">
+          <EntitySetMapping Name="Versions">
+            <EntityTypeMapping TypeName="RecipeAPIModel.Version">
+              <MappingFragment StoreEntitySet="Version">
+                <ScalarProperty Name="VersionId" ColumnName="VersionId" />
+                <ScalarProperty Name="ApiVersion" ColumnName="ApiVersion" />
+                <ScalarProperty Name="Version1" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="RecipeAPIModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="APIVersionId" ColumnName="APIVersionId" />
+                <ScalarProperty Name="ErrorLogId" ColumnName="ErrorLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="RecipeAPIModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IngredientLists">
+            <EntityTypeMapping TypeName="RecipeAPIModel.IngredientList">
+              <MappingFragment StoreEntitySet="IngredientList">
+                <ScalarProperty Name="MeasurementId" ColumnName="MeasurementId" />
+                <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+                <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+                <ScalarProperty Name="IngredientListId" ColumnName="IngredientListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Instructions">
+            <EntityTypeMapping TypeName="RecipeAPIModel.Instruction">
+              <MappingFragment StoreEntitySet="Instruction">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="InstructionId" ColumnName="InstructionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstructionLists">
+            <EntityTypeMapping TypeName="RecipeAPIModel.InstructionList">
+              <MappingFragment StoreEntitySet="InstructionList">
+                <ScalarProperty Name="Instruction" ColumnName="Instruction" />
+                <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+                <ScalarProperty Name="InstructionListId" ColumnName="InstructionListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Measurements">
+            <EntityTypeMapping TypeName="RecipeAPIModel.Measurement">
+              <MappingFragment StoreEntitySet="Measurement">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MeasurementId" ColumnName="MeasurementId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="RecipeAPIModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="RecipeAPIModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

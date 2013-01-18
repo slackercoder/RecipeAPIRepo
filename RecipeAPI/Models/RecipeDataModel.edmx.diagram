@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="18385176e2ae43eebcb836bfb6663a89" Name="Diagram1">
+        <EntityTypeShape EntityType="RecipeAPIModel.Version" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeAPIModel.ErrorLog" Width="1.5" PointX="7.875" PointY="6.125" />
+        <EntityTypeShape EntityType="RecipeAPIModel.Ingredient" Width="1.5" PointX="2.625" PointY="0.5" />
+        <EntityTypeShape EntityType="RecipeAPIModel.IngredientList" Width="1.5" PointX="5.625" PointY="2" />
+        <EntityTypeShape EntityType="RecipeAPIModel.Instruction" Width="1.5" PointX="8.625" PointY="3.5" />
+        <EntityTypeShape EntityType="RecipeAPIModel.InstructionList" Width="1.5" PointX="11.625" PointY="5" />
+        <EntityTypeShape EntityType="RecipeAPIModel.Measurement" Width="1.5" PointX="18" PointY="6.5" />
+        <EntityTypeShape EntityType="RecipeAPIModel.Recipe" Width="1.5" PointX="2.25" PointY="3.625" />
+        <AssociationConnector Association="RecipeAPIModel.FK_IngredientList_Ingredient" />
+        <AssociationConnector Association="RecipeAPIModel.FK_IngredientList_Measurement" />
+        <AssociationConnector Association="RecipeAPIModel.FK_IngredientList_Recipe" />
+        <AssociationConnector Association="RecipeAPIModel.FK_InstructionList_Recipe" />
+        <EntityTypeShape EntityType="RecipeAPIModel.Member" Width="1.5" PointX="10.452358742455187" PointY="28.429085103994741" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
